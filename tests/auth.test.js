@@ -11,6 +11,10 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/?modal=sign_in');
 });
 
+test.afterEach(async ({ context }) => {
+  await context.close();
+});
+
 test('Successful Auth', async ({ page }) => {
   await page.fill("[placeholder='Email']", user.email);
   await page.fill("[placeholder='Пароль']", user.password);
@@ -27,8 +31,4 @@ test('Unsuccessful Auth', async ({ page }) => {
   await expect(
     page.locator('.components-ui-Form-Hint--hint--A2dPV')
   ).toHaveText('Вы ввели неправильно логин или пароль');
-});
-
-test.afterEach(async ({ context }) => {
-  await context.close();
 });
